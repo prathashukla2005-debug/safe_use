@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bodywise Safe-Use Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F1F6F7;--card:#fff;--ink:#16292E;--mut:#5B7077;--line:#D5E2E5;--pri:#0F4C5C;--acc:#E36414;--ok:#17795F;--okbg:#DDF3EC;--care:#9A5B00;--carebg:#FFF0D4;--no:#B3261E;--nobg:#FCE4E1;--info:#0F4C5C;--infobg:#DFEEF1;color-scheme:light}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0E1A1D;--card:#162428;--ink:#E8F2F4;--mut:#93ABB2;--line:#2A3E44;--pri:#7FD1DE;--acc:#FF9A5C;--ok:#5FD3B3;--okbg:#15332B;--care:#FFC266;--carebg:#3A2C10;--no:#FF8A80;--nobg:#3D1A18;--info:#7FD1DE;--infobg:#17333A;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0E1A1D;--card:#162428;--ink:#E8F2F4;--mut:#93ABB2;--line:#2A3E44;--pri:#7FD1DE;--acc:#FF9A5C;--ok:#5FD3B3;--okbg:#15332B;--care:#FFC266;--carebg:#3A2C10;--no:#FF8A80;--nobg:#3D1A18;--info:#7FD1DE;--infobg:#17333A;color-scheme:dark}
+*{box-sizing:border-box}html,body{height:100%;margin:0}
+:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{background:var(--bg);color:var(--ink);font:16px/1.5 "DM Sans",system-ui,-apple-system,"Segoe UI",sans-serif}
+#app{max-width:540px;margin:0 auto;padding:18px 18px 40px}
+h1,h2,h3{font-family:Fraunces,Georgia,serif;font-weight:600;margin:0;line-height:1.2}
+h1{font-size:27px}h2{font-size:20px}h3{font-size:17px;margin-bottom:6px}
+p{margin:0 0 10px}.mut{color:var(--mut)}.sm{font-size:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0}
+button{font:inherit;cursor:pointer;border:0;border-radius:12px;padding:12px 16px;font-weight:700;min-height:44px}
+button:focus-visible,input:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.pri{background:var(--pri);color:var(--bg);width:100%}
+.sec{background:transparent;color:var(--pri);border:1.5px solid var(--line);width:100%}
+.sos{background:var(--no);color:var(--card);width:100%;margin:12px 0}
+.prod{display:flex;gap:12px;align-items:center;width:100%;text-align:left;background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:14px;padding:14px;margin:8px 0;font-weight:500}
+.prod .i{font-size:26px}.prod b{display:block}.prod span{font-size:14px;color:var(--mut)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:10px 0}
+.chip{background:var(--card);color:var(--ink);border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;font-weight:500;min-height:40px}
+.chip[aria-pressed="true"]{background:var(--pri);color:var(--bg);border-color:var(--pri)}
+.v{border-radius:14px;padding:14px;margin-top:12px}.v b{display:block;margin-bottom:4px}
+.v-ok{background:var(--okbg);color:var(--ok)}.v-care{background:var(--carebg);color:var(--care)}.v-no{background:var(--nobg);color:var(--no)}.v-info{background:var(--infobg);color:var(--info)}
+.v p{margin:0;color:var(--ink);font-size:15px}
+ul{margin:6px 0 0;padding-left:20px}li{margin:5px 0}
+.big{font-family:Fraunces,Georgia,serif;font-size:34px;text-align:center;margin:6px 0}
+input[type=number]{width:100%;font:inherit;padding:10px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+label{display:block;font-size:14px;color:var(--mut);margin:8px 0 4px}
+.row{display:flex;gap:10px}.row>*{flex:1}
+.bars{display:flex;align-items:flex-end;gap:8px;height:90px;margin:10px 0}.bars i{flex:1;background:var(--acc);border-radius:6px 6px 0 0;position:relative}.bars i span{position:absolute;top:-18px;left:0;right:0;text-align:center;font-size:12px;font-style:normal;color:var(--mut)}
+.back{background:none;color:var(--pri);padding:6px 0;min-height:40px;width:auto}
+.note{font-size:13px;color:var(--mut);margin-top:16px}
+</style>
+</head>
+<body>
+<div id="app"></div>
+<script>
+const Z=[["ua","Underarms"],["fold","Skin folds"],["limbs","Arms and legs"],["feet","Feet"],["scalp","Scalp"],["trunk","Stomach, hips, thighs"],["face","Face"]];
+const PR={
+ spray:{n:"Body Sunscreen Spray SPF 50",i:"☀️",d:"Sun protection",size:0,timer:1,
+  r:{ua:["ok","Fine to use. Rub it in after spraying so it doesn’t sit in the fold."],fold:["care","Spray into your palm and rub in. Folds trap product and can itch."],limbs:["ok","Good for this area. Rub in after spraying."],feet:["ok","Fine to use. Rub in well."],scalp:["care","Mist along your parting only. Don’t soak your hair."],trunk:["ok","Good for this area. Rub in after spraying."],face:["care","Don’t spray at your face. Spray into your hands and pat on, away from eyes and mouth."]},
+  pair:["Reapply every 2 hours in direct sun, and after swimming or sweating.","Use a calming, fragrance-free moisturiser after sun.","Check the label before using it on the same day as a de-tan treatment."]},
+ urea:{n:"20% Urea Foot Roll On",i:"🦶",d:"Hard skin and calluses",size:75,
+  r:{feet:["ok","Made for thick, hard skin like heels and calluses."],limbs:["care","Rough patches like elbows and knees only. Skip thin or sensitive skin."],ua:["no","This strength is for thick skin. Underarm skin is thin and rubs, so it can burn."],fold:["no","Thin skin that rubs. Strong urea can sting and burn here."],scalp:["no","Not made for the scalp."],trunk:["no","Not made for this area. Stick to feet and rough patches."],face:["no","Too strong for facial skin."]},
+  pair:["Apply on clean, dry skin. Never on cracked, bleeding or broken skin.","Follow with a plain moisturiser if the skin feels tight.","75 ml goes fast with daily use. Check how long yours will last below."]},
+ shamp:{n:"1% Ketoconazole Anti-Dandruff Shampoo",i:"🧴",d:"Dandruff and scalp care",size:250,
+  r:{scalp:["ok","Made for the scalp. Massage in, leave for a few minutes, rinse well."],face:["care","Keep it off your face and out of your eyes. Rinse straight away if it runs down."],ua:["no","This is a shampoo for the scalp, not body skin."],fold:["no","This is a shampoo for the scalp, not body skin."],limbs:["no","This is a shampoo for the scalp, not body skin."],feet:["no","This is a shampoo for the scalp, not body skin."],trunk:["no","This is a shampoo for the scalp, not body skin."]},
+  pair:["Condition the lengths of your hair after every wash. Ketoconazole cleans well but can leave hair dry.","Use it only as often as the label says, with a gentle shampoo on other days.","Rinse fully and close the cap firmly. Store the bottle upright to avoid leaks."]},
+ serum:{n:"Anti-Stretch Mark Serum Roll On",i:"🌀",d:"Stretch marks",size:0,
+  r:{trunk:["ok","Made for stretch-prone areas like the stomach, hips and thighs."],limbs:["ok","Fine on upper arms and legs where stretch marks appear."],fold:["care","Thin skin that rubs. Patch test first and start on alternate days."],ua:["no","Underarm skin is thin and gets rubbed by shaving and sweat. Burning is most reported here, so don’t apply it."],face:["no","Not made for the face."],scalp:["no","Not made for the scalp."],feet:["no","Not made for feet."]},
+  pair:["Apply on clean, dry skin and let it absorb before dressing.","Add a plain moisturiser on top if skin feels tight.","If it stings or burns, rinse straight away and don’t use it on that area again."]},
+ detan:{n:"De-Tan Kit",i:"🌤️",d:"Tan removal",size:0,track:1,
+  r:{limbs:["ok","Best on arms and legs."],trunk:["ok","Good for this area."],feet:["ok","Good for this area."],face:["care","Patch test first, keep it away from eyes, and use the shortest time on the label."],ua:["care","Thin skin. Patch test first and use the shortest time."],fold:["care","Thin skin that can sting. Patch test first and use the shortest time."],scalp:["no","Not made for the scalp."]},
+  pair:["Wear sunscreen the next day. De-tan treatments leave skin more sun-sensitive.","Don’t use other exfoliants on the same day.","Start with the shortest time on the label. Build up only if skin stays calm."]}
+};
+let S=ld()||{view:"home",p:null,zone:null,sens:false,shaved:false,patch:{},sess:[],tEnd:0,off:0};
+let lv=0;
+function ld(){try{return JSON.parse(localStorage.getItem("bsg")||"null")}catch(e){return null}}
+function sv(){try{localStorage.setItem("bsg",JSON.stringify(S))}catch(e){}}
+function verdict(){
+ const P=PR[S.p];if(!S.zone)return"";
+ let [l,t]=P.r[S.zone]||["no","Not made for this area."];
+ if(S.shaved&&l!=="no"&&S.zone!=="scalp"){l="no";t="Wait about 48 hours after shaving or waxing. Hair removal leaves tiny breaks in the skin that actives can burn."}
+ else if(S.sens&&l==="ok"){l="care";t="You said your skin is sensitive. Patch test first and start on alternate days. "+t}
+ const h={ok:"Good to go",care:"Use with care",no:"Don’t use it here"}[l];
+ return `<div class="v v-${l}" role="status"><b>${h}</b><p>${t}</p></div>`;
+}
+function home(){
+ return `<h1>Use it safely, get results</h1><p class="mut">Pick the product you’re about to use. We’ll check the body area, walk you through a patch test, and set up the right routine around it.</p>
+ ${Object.entries(PR).map(([k,p])=>`<button class="prod" data-a="open" data-v="${k}"><span class="i">${p.i}</span><div><b>${p.n}</b><span>${p.d}</span></div></button>`).join("")}
+ <button class="sos" data-a="tri">My skin is burning or itching right now</button>
+ <p class="note">Guidance only, not medical advice. This stays on your device, and we never ask for your name or contact details.</p>`;
+}
+function patchCard(){
+ const pt=S.patch[S.p];let b="";
+ if(!pt)b=`<p class="sm">Dab a small amount on your inner forearm and leave it for 24 hours without washing it off.</p><button class="pri" data-a="pstart">I’ve applied it. Start 24-hour check</button>`;
+ else{const h=(Date.now()+S.off-pt.t)/36e5;
+  if(pt.res==="ok")b=`<div class="v v-ok"><b>Patch test passed</b><p>No reaction, so you can start using it on the areas marked good to go or use with care.</p></div>`;
+  else if(pt.res==="bad")b=`<div class="v v-no"><b>Don’t use this product</b><p>You reacted, so rinse the spot with cool water and skip this product. Ask a doctor or pharmacist before trying again.</p></div><button class="sec" data-a="preset" style="margin-top:10px">Start again</button>`;
+  else if(h<24)b=`<div class="v v-info"><b>${Math.ceil(24-h)} hours to go</b><p>Leave it alone. Check the spot once the 24 hours are up.</p></div><button class="sec" data-a="pskip" style="margin-top:10px">Demo: skip ahead 24 hours</button>`;
+  else b=`<p class="sm"><b>24 hours are up.</b> How does the spot look?</p><div class="row"><button class="pri" data-a="pres" data-v="ok">No reaction</button><button class="sec" data-a="pres" data-v="bad">Red, itchy or burning</button></div>`;}
+ return `<div class="card"><h3>1. Patch test first</h3>${b}</div>`;
+}
+function fmt(ms){const s=Math.max(0,Math.ceil(ms/1000));return String(Math.floor(s/3600)).padStart(1,"0")+":"+String(Math.floor(s%3600/60)).padStart(2,"0")+":"+String(s%60).padStart(2,"0")}
+function tool(){
+ const P=PR[S.p];let h="";
+ if(P.timer){const left=S.tEnd-Date.now();
+  h=`<div class="card"><h3>Sun reapply timer</h3><p class="sm mut">Sunscreen wears off. Start this when you head outside.</p>${S.tEnd&&left>0?`<div class="big" id="tm">${fmt(left)}</div><p class="sm mut" style="text-align:center">until your next coat</p><button class="sec" data-a="tstop">Stop timer</button>`:S.tEnd?`<div class="v v-care"><b>Time to reapply</b><p>It’s been 2 hours. Apply a fresh coat now.</p></div><button class="pri" data-a="tstart" style="margin-top:10px">Restart 2-hour timer</button>`:`<div class="row"><button class="pri" data-a="tstart">Start 2-hour timer</button><button class="sec" data-a="tdemo">Demo: 10 seconds</button></div>`}</div>`}
+ if(P.size)h=`<div class="card"><h3>Will this bottle last?</h3><label for="sz">Bottle size (ml)</label><input id="sz" type="number" value="${P.size}" min="1"><label for="ml">Amount per use (ml)</label><input id="ml" type="number" value="${P.size>100?10:1.5}" step="0.5" min="0.1"><label for="wk">Uses per week</label><input id="wk" type="number" value="${P.size>100?3:7}" min="1" max="21"><div class="v v-info" id="lastres"></div></div>`;
+ if(P.track){const L=S.sess;const bars=L.map((s,i)=>`<i style="height:${s.lv*18}px"><span>${s.lv}</span></i>`).join("");
+  let msg="Log your tan level (1 is none, 5 is very dark) before each session.";
+  if(L.length>=3){const d=L[0].lv-L[L.length-1].lv;msg=d>=1?"Your tan is lifting. Keep to the same routine.":"No change after "+L.length+" sessions. Don’t increase time beyond the label. Try a gentle weekly exfoliation and keep sunscreen on, since a deeper tan can take 3 to 4 weeks of skin renewal to fade."}
+  else if(L.length)msg="Too early to judge. De-tan results usually show over about 3 sessions, spaced a few days apart.";
+  h=`<div class="card"><h3>De-tan progress</h3><p class="sm mut">Surface tan lifts in a few sessions, and deeper tan takes weeks. Log each one to see what’s really happening.</p><div class="chips" role="group" aria-label="Tan level">${[1,2,3,4,5].map(n=>`<button class="chip" aria-pressed="${lv===n}" data-a="lv" data-v="${n}">${n}</button>`).join("")}</div><button class="pri" data-a="log" ${lv?"":"disabled style='opacity:.5'"}>Log session</button>${L.length?`<div class="bars" aria-label="Tan level per session">${bars}</div>`:""}<div class="v v-info"><p>${msg}</p></div></div>`}
+ return h;
+}
+function prod(){
+ const P=PR[S.p];
+ return `<button class="back" data-a="home">← All products</button><h1>${P.i} ${P.n}</h1>
+ <div class="card"><h3>Where will you use it?</h3><div class="chips" role="group" aria-label="Body area">${Z.map(z=>`<button class="chip" aria-pressed="${S.zone===z[0]}" data-a="zone" data-v="${z[0]}">${z[1]}</button>`).join("")}</div>
+ <div class="chips"><button class="chip" aria-pressed="${S.sens}" data-a="sens">My skin is sensitive</button><button class="chip" aria-pressed="${S.shaved}" data-a="shaved">Shaved or waxed recently</button></div>
+ ${verdict()||'<p class="sm mut">Choose an area to see if this product is right for it.</p>'}</div>
+ ${patchCard()}
+ <div class="card"><h3>2. Pair it right</h3><ul>${P.pair.map(t=>`<li>${t}</li>`).join("")}</ul></div>
+ ${tool()}
+ <button class="sos" data-a="tri">My skin is burning or itching right now</button>
+ <p class="note">Guidance only, not medical advice. Always read the label on your product.</p>`;
+}
+function tri(){
+ const o=[["Mild redness","care","Rinse the area with cool water and pat dry. Skip the product on that area for now and use a plain, fragrance-free moisturiser. Patch test again before reusing it."],["Itching","care","Rinse with cool water and stop using the product. A cool compress can ease itching. If it isn’t better in 24 to 48 hours, see a doctor or pharmacist."],["Burning or stinging","no","Rinse with cool water for several minutes right away and stop using the product. Don’t scrub. If the burning continues, see a doctor today."],["Blisters, swelling or oozing","no","Rinse with cool water, stop the product and see a doctor today. Don’t pop blisters or apply more actives."],["Trouble breathing or a swollen face","no","Call your local emergency number now."]];
+ return `<button class="back" data-a="${S.p?"open":"home"}" data-v="${S.p||""}">← Back</button><h1>What’s happening?</h1><p class="mut">First, wash off the product with cool water. Then tell us what you see.</p>
+ ${o.map((x,i)=>`<button class="prod" data-a="sev" data-v="${i}"><div><b>${x[0]}</b></div></button>`).join("")}<div id="sevres">${S.sev!=null?`<div class="v v-${o[S.sev][1]}" role="status"><b>${o[S.sev][0]}</b><p>${o[S.sev][2]}</p></div>`:""}</div><p class="note">Guidance only, not medical advice. If you’re worried, see a doctor.</p>`;
+}
+function render(){document.getElementById("app").innerHTML=S.view==="home"?home():S.view==="prod"?prod():tri();upd();}
+function upd(){const r=document.getElementById("lastres");if(!r)return;
+ const a=+document.getElementById("sz").value,b=+document.getElementById("ml").value,c=+document.getElementById("wk").value;
+ if(!(a>0&&b>0&&c>0)){r.innerHTML="<p>Enter all three numbers.</p>";return}
+ const wks=a/(b*c),d=Math.floor(wks*7),dt=new Date(Date.now()+d*864e5);
+ r.innerHTML=`<b>About ${d} days</b><p>Reorder around ${dt.toLocaleDateString(undefined,{day:"numeric",month:"short"})} to avoid running out.</p>`;}
+document.addEventListener("input",e=>{if(["sz","ml","wk"].includes(e.target.id))upd()});
+document.addEventListener("click",e=>{
+ const b=e.target.closest("[data-a]");if(!b||b.disabled)return;const a=b.dataset.a,v=b.dataset.v;
+ if(a==="open"){S.p=v;S.view="prod";S.zone=null;S.sev=null}
+ else if(a==="home"){S.view="home";S.p=null}
+ else if(a==="tri"){S.view="tri";S.sev=null}
+ else if(a==="sev")S.sev=+v;
+ else if(a==="zone")S.zone=v;
+ else if(a==="sens")S.sens=!S.sens;
+ else if(a==="shaved")S.shaved=!S.shaved;
+ else if(a==="pstart")S.patch[S.p]={t:Date.now()+S.off,res:null};
+ else if(a==="pskip"){S.off+=864e5}
+ else if(a==="pres")S.patch[S.p].res=v;
+ else if(a==="preset")delete S.patch[S.p];
+ else if(a==="tstart")S.tEnd=Date.now()+72e5;
+ else if(a==="tdemo")S.tEnd=Date.now()+1e4;
+ else if(a==="tstop")S.tEnd=0;
+ else if(a==="lv"){lv=+v}
+ else if(a==="log"){S.sess.push({t:Date.now(),lv});lv=0}
+ sv();render();if(a!=="zone"&&a!=="sens"&&a!=="shaved"&&a!=="lv"&&a!=="sev")window.scrollTo(0,0);
+});
+setInterval(()=>{if(S.view==="prod"&&S.tEnd){const l=S.tEnd-Date.now(),t=document.getElementById("tm");if(t&&l>0)t.textContent=fmt(l);else if(l<=0&&t)render()}},1000);
+render();
+</script>
+</body>
+</html>
